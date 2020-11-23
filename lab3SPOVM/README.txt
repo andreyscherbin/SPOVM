@@ -1,0 +1,5 @@
+0. скачать xterm
+1. g++ server.cpp -o server -lpthread
+2. g++ client.cpp -o client -lpthread
+3. sudo ./server
+4. PROFIT!
