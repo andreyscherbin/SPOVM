@@ -1,0 +1,4 @@
+1. gcc -c lib_lab5.c
+2. gcc -shared -o libwriteread.so lib_lab5.o
+3. gcc -o lab5 main.c help_main.c -lpthread -ldl
+4. ./lab5

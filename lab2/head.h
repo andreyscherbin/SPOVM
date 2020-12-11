@@ -24,6 +24,9 @@ using namespace std;
 #include <sys/ipc.h>
 #include <sys/sem.h>
 #include <fcntl.h>
+#include <iostream>
+
+using namespace std;
 #define _getch mygetchar
 #define PID int
 #define SEM_RESOURCE_MAX 1
@@ -46,7 +49,7 @@ public:
         ZeroMemory( &si, sizeof(si) );
         si.cb = sizeof(si);
         ZeroMemory( &proc, sizeof(proc) );
-        wsprintf(name,"Programmer %d",count);
+        wsprintf(name,"ChildProcess1 %d",count);
         wsprintf(number,"%d",count);
         strcat(eventprint,number);
         if(!CreateProcess(NULL, name ,NULL,NULL,TRUE,NULL,NULL,NULL,&si,&proc))
@@ -68,7 +71,7 @@ public:
              if (proc == 0)
              {              
                 sprintf(number, "%d", count);                
-                execlp("./Programmer","Programmer",number,(char*)NULL);	             
+                execlp("./ChildProcess1","ChildProcess1",number,(char*)NULL);	             
                 perror("exec");
              }
     }

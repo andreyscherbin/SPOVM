@@ -1,5 +1,5 @@
 
-char STRING[10][30] = {{"1) First programmer"}, {"2) Second programmer"}, {"3) Third programmer"}, {"4) Fourth programmer"}, {"5) Fifth programmer"},{"6) Sixth programmer"}, {"7) Seventh programmer"}, {"8) Eighth programmer"}, {"9) Ninth programmer"}, {"10) Tenth programmer"}};
+char STRING[10][30] = {{"1) First ChildProcess1"}, {"2) Second ChildProcess1"}, {"3) Third ChildProcess1"}, {"4) Fourth ChildProcess1"}, {"5) Fifth ChildProcess1"},{"6) Sixth ChildProcess1"}, {"7) Seventh ChildProcess1"}, {"8) Eighth ChildProcess1"}, {"9) Ninth ChildProcess1"}, {"10) Tenth ChildProcess1"}};
 
 #ifdef _WIN32
 using namespace std;
@@ -104,7 +104,7 @@ void CreateSemaphore()
         sigemptyset(&blockSet);              //Start mask signal SIGUS1
         sigaddset(&blockSet,SIGUSR1); 
 	
-  if( (key = ftok ("Parent",'s')) < 0)
+  if( (key = ftok ("ParentProcess",'s')) < 0)
          {
              perror("no open key");
          }
@@ -170,8 +170,8 @@ int main(int argc, char *argv[])
 		si.cb = sizeof(STARTUPINFO);		
 		itoa((int)write, stringWrite, 10);
 		itoa((int)read, stringRead, 10);
-        wsprintf(wayChild, "Compiler %s %s %s", stringWrite, stringRead,numberstring);	
-		cout << "\nProgrammer " << number;
+        wsprintf(wayChild, "ChildProcess2 %s %s %s", stringWrite, stringRead,numberstring);	
+		cout << "\nChildProcess1 " << number;
 		cout << " choose format" << " .java .asm .cpp\n";
 		cin >> format;
 		WriteFile(write, format, 50, &dw, NULL);
@@ -233,7 +233,7 @@ int main(int argc, char *argv[])
 	
        CreateSemaphore();              
        WaitSemaphore();     
-       printf("\nProgrammer %d choose format .java .asm .cpp\n",number);        
+       printf("\nChildProcess1 %d choose format .java .asm .cpp\n",number);        
        scanf("%s",format);   
        ReleaseSemaphore(); 
        write(pipedes[1], format, 50);
@@ -246,7 +246,7 @@ while (true)
        {        
          read(pipedes[0],format,50);                    
          WaitSemaphore();   
-         printf("\nProgrammer %d choose format .java .asm .cpp\n",number);            
+         printf("\nChildProcess1 %d choose format .java .asm .cpp\n",number);            
          scanf("%s",format); 
          ReleaseSemaphore(); 
          write(pipedes[1], format, 50);         
@@ -254,7 +254,7 @@ while (true)
          
          if(pid == 0)
          {            
-            execlp("/usr/bin/xterm","xterm","-e","./Compiler",stringRead,stringWrite,(char*)NULL);
+            execlp("/usr/bin/xterm","xterm","-e","./ChildProcess2",stringRead,stringWrite,(char*)NULL);
          }
        }       	  
 	  
@@ -292,7 +292,7 @@ while (true)
       }
     if ( pid == 0)
     {
-      execlp("/usr/bin/xterm","xterm","-e","./Compiler",stringRead,stringWrite,(char*)NULL);
+      execlp("/usr/bin/xterm","xterm","-e","./ChildProcess2",stringRead,stringWrite,(char*)NULL);
     }
         close(pipedes[0]);
         close(pipedes[1]);  

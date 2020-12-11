@@ -38,20 +38,21 @@ int main(){
   char input[]="Ввод пользователя";
 
  /*Если канал с таким именем существует, удалим его*/
- unlink("/tmp/fifo0001.1");
+ unlink("./fifo0001.1");
 
  /*Создаем канал*/
- if((mkfifo("/tmp/fifo0001.1", O_RDWR)) == -1)
+ if((mkfifo("./fifo0001.1", O_RDWR)) == -1)
  {
    fprintf(stderr, "Невозможно создать fifo\n");
    exit(0);
  }
 
- /* Открываем уже существующий семафор для уведомления сервера */
- if ( (sem_server = sem_open(SEMAPHORE_SERVER_NOTIFICATION, 0)) == SEM_FAILED ) {
-       perror("sem_open");
-       return 1;
-   }
+ 
+   /* Создаем семафор для уведомления сервера */
+   if ( (sem_server = sem_open(SEMAPHORE_SERVER_NOTIFICATION, O_CREAT, 0777, 0)) == SEM_FAILED ) {
+         perror("sem_open");
+         return 1;
+     }
    /* Создаем семафор для уведомления клиента */
    if ( (sem_client = sem_open(SEMAPHORE_CLIENT_NOTIFICATION, O_CREAT, 0777, 0)) == SEM_FAILED ) {
          perror("sem_open");
@@ -66,7 +67,7 @@ int main(){
  if(pid > 0) {  // блок кода для серверного процесса
 
 /*Открываем fifo для записи*/
- if((channel=open("/tmp/fifo0001.1", O_WRONLY)) == - 1)
+ if((channel=open("./fifo0001.1", O_WRONLY)) == - 1)
  {
    fprintf(stderr, "Невозможно открыть fifo\n");
    exit(0);

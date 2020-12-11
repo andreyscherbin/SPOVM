@@ -132,7 +132,7 @@ public:
 		}
 		if (pid == 0)
         {           
-            execlp("/usr/bin/xterm","xterm","-e","./Compiler",stringRead,stringWrite,(char*)NULL);
+            execlp("/usr/bin/xterm","xterm","-e","./ChildProcess",stringRead,stringWrite,(char*)NULL);
         }
         }
         endwin();

@@ -1,4 +1,4 @@
-#include "ParentHeader.h"
+#include "head.h"
 
 MYPROCESS * ms[10];
 int count=0;                                // process counter
@@ -63,7 +63,7 @@ void CreateSemaphore()
         sigemptyset(&blockSet);              //Start mask signal SIGUSR2
         sigaddset(&blockSet,SIGUSR2);       
         semopts.val = SEM_RESOURCE_MAX;
-        if ((key = ftok("Parent", 's')) < 0)
+        if ((key = ftok("ParentProcess", 's')) < 0)
 	  	 {
              perror("ftok parent");			 
          }
@@ -104,6 +104,8 @@ void ReleaseSemaphore()
 
 int main()
 {   
+        cout << "+,-,q" << endl;
+	
 #ifdef _WIN32  
     char completedprintfevent[50]="completedprint";
     HANDLE completedprintevent = CreateEvent(NULL ,FALSE,TRUE,completedprintfevent);

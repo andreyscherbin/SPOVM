@@ -1,0 +1,4 @@
+0. скачать xterm (дочерний процесс будет в другом окне)
+1. g++ -o ParentProcess ParentProcess.cpp -lncurses
+2. g++ -o ChildProcess ChildProcess.cpp
+3. ./ParentProcess

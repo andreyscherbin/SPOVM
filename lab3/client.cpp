@@ -21,11 +21,11 @@ using namespace std;
   int channel;                   // идентификатор канала
   char input[]="Ввод пользователя";
 
-  /* Создаем семафор для уведомления сервера */
-  if ( (sem_server = sem_open(SEMAPHORE_SERVER_NOTIFICATION, O_CREAT, 0777, 0)) == SEM_FAILED ) {
-        perror("sem_open");
-        return 1;
-    }
+  /* Открываем уже существующий семафор для уведомления сервера */
+ if ( (sem_server = sem_open(SEMAPHORE_SERVER_NOTIFICATION, 0)) == SEM_FAILED ) {
+       perror("sem_open");
+       return 1;
+   }
 
   /* Открываем уже существующий семафор для уведомления клиента */
   if ( (sem_client = sem_open(SEMAPHORE_CLIENT_NOTIFICATION, 0)) == SEM_FAILED ) {
@@ -33,7 +33,7 @@ using namespace std;
         return 1;
         }
 
-  if (( channel = open("/tmp/fifo0001.1", O_RDONLY))<0)
+  if (( channel = open("./fifo0001.1", O_RDONLY))<0)
 
   { perror("fifo open"); exit(0); }
 
